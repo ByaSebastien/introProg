@@ -1,0 +1,30 @@
+package Tableau2d;
+
+public class TableauChar {
+	public static void FillTab(char tab[][]){
+		for (int i=0;i<tab.length;i++){
+			for (int j=0;j<tab[0].length;j++){
+				tab[i][j]='b';
+			}
+		}
+	}
+	public static void ShowTab (char tab[][]){
+		for (int i=0;i<tab.length;i++){
+			System.out.println();
+			for (int j=0;j<tab[0].length;j++){
+				System.out.print(tab[i][j]+"\t");
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		
+		
+		char tab[][]= new char[4][5];
+		
+		FillTab(tab);
+		ShowTab(tab);
+
+	}
+
+}

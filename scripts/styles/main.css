@@ -1,0 +1,74 @@
+body{
+	background-image: url('../images/space.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+}
+table{
+	border-style: solid;border-width:1px; 
+	border-collapse:collapse;
+	max-width: 600px;
+	margin: auto;
+	/*background-image: url('../images/chien.jpg');*/
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+th,td{
+	border-style: solid;
+	border-width:1px;
+	color: azure;
+	font-weight: 400;
+}
+th{
+	color: black;
+	background-color: green;
+	border-width: 3px;
+	font-weight: 900;
+}
+div{
+	margin: auto;
+	
+	text-align: center;
+	font-family: 'Cinzel', serif;
+}
+h1{
+	font-size: 35px;
+	font-weight: 900;
+	margin: 20px auto 5px;
+	width: 100%;
+	color: white;
+}
+.img{
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 60px;
+	width: 110px;
+	border-color: white;
+}
+.mercure{
+	background-image: url('../images/mercure.jpg');
+}
+.venus{
+	background-image: url('../images/venus.jpg');
+}
+.terre{
+	background-image: url('../images/terre.jpg');
+}
+.mars{
+	background-image: url('../images/mars.jpg');
+}
+.jupiter{
+	background-image: url('../images/jupiter.jpg');
+}
+.saturne{
+	background-image: url('../images/saturne.jpg');
+}
+.uranus{
+	background-image: url('../images/uranus.jpg');
+}
+.neptune{
+	background-image: url('../images/neptune.jpg');
+}
+.pluton{
+	background-image: url('../images/pluton.jpg');
+}

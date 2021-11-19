@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Formulaire</title>
+	<style>
+		body{
+			background-color: black;
+		}
+		label{
+			color: white;
+			font-weight: 900;
+		}
+		input{
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<form action="recoit.php" method="POST">
+		<label for="prenomId">Prénom </label> : 
+		<input type="text" name="prenom" id="prenomId" placeholder="Entrez votre nom"  maxlength="10" value=""/>
+		<br/>  
+		<label for="nomId">Nom</label> :
+		<input type="text" name="nom" id="nomId" value='Albert'/><br/>
+		<label for="pwId">Mot de passe </label> :
+		<input type="password" name="pwd" id="pwdId"/><br/>
+		<label for="emailId">email</label> :
+		<input type="email" name="email" id="emailId"><br/>
+		<label for="enfantId">Nbre enfants</label> :
+		<input type="number" name="enfant" id="enfantId" value="0" min="0" max="10"/><br/>
+		<input type="hidden" name="secret" value="Jesuiscaché">
+Sexe:
+		<label for="sexeIdF">Femme</label> :
+		<input type="radio" name="sexe" id="sexeIdF" value="F" > <!-- checked donne un sélection de base -->
+		<label for="sexeIdH">Homme</label> :
+		<input type="radio" name="sexe" id="sexeIdH" value="H" checked>   <!-- vu que le meme name le browser sait que c'est pour le même groupe de radio button, la value permet de passer le parametre H ou F -->
+		<br/>
+Hobbies:
+		<label for="Hobby1">Tennis</label> :
+		<input type="checkbox" name="hobby[]" id="Hobby1" value="tennis" checked> 
+		<label for="Hobby2">Pêche</label> :
+		<input type="checkbox" name="hobby[]" id="Hobby2" value="fishing">   <!-- name hobby est commun  -->		
+	<br>
+<br>
+
+Pays:
+		<select name="pays">
+			<option value="none" >Aucun</option>
+			<option value="be" selected>Belgique</option>
+			<option value="fr">France</option>
+			<option value="de">Allemagne</option>
+		</select>
+		<br/>
+Langages multi :
+		<select name="langage_multi[]" multiple>
+			<option value="js">Javascript</option>
+			<option value="ja">Java</option>
+			<option value="ph">PHP</option>
+		</select>
+		<br/>
+Commentaires :				
+		<textarea name="Commentaire" cols=30 rows=10>coucou 
+c'est moi
+		</textarea>
+		<br/>
+
+		<input type="submit" name="envoi" value="Soumettre"/>
+		<input type="reset" name="reset" value="Annuler"/>
+		<input type="button" name="rien" value="Ne fait rien" onclick="alert('coucou');"/>
+	    <!-- la value définit ce qui sera affiché sur le bouton -->
+	    <input class="rec" name="envoi" type="image" src="search.png" alt="Rechercher"/> <!--fait submit aussi : attention name sera envoi_x et envoi_y avec coordonnées du click sur image-->
+	    <button type="submit" name="envoi"><img src="ok.jpg" width="30px"/></button>
+	</form>
+</body>
+</html>

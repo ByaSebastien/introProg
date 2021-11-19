@@ -1,0 +1,38 @@
+package Interface;
+
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class CompteurClic extends JFrame {
+	
+	private static JPanel lePanel;
+	private static JButton bOk,bInit,bQuit;
+	private static JLabel leLabel;
+	private static int cpt=0;
+
+	public static void main(String[] args) {
+		
+		CompteurClic fen=new CompteurClic();
+		fen.setSize(600,200);
+		fen.setLocation(400,400);
+		
+		bOk=new JButton("Clique ici");
+		bInit=new JButton("Réinitialiser");
+		bQuit=new JButton("Quitter");
+		leLabel= new JLabel("\t"+cpt);
+		lePanel= new JPanel();
+		lePanel.setBackground(new Color(16,240,125));
+		lePanel.add(leLabel);
+		lePanel.add(bOk);
+		lePanel.add(bInit);
+		lePanel.add(bQuit);
+		fen.add(lePanel);
+		fen.setVisible(true);
+		
+		
+	}
+}

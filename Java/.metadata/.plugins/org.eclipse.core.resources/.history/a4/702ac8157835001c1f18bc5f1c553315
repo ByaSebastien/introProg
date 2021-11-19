@@ -1,0 +1,60 @@
+package Interface;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+
+import javax.swing.*;
+
+public class Saisies extends JFrame {
+	
+	private static JPanel panelFond,panelNord,panelSud;
+	private static JLabel lNb1,lNb2,lPlus,lEgal;
+	private static JTextField tfReponse;
+	private static JButton bCorrection,bInit,bQuit;
+	
+
+	public static void main(String[] args) {
+		
+		Saisies fen=new Saisies();
+		fen.setSize(500,300);
+		fen.setLocation(200,300);
+		fen.setTitle("Des additions ! :-)");
+		panelFond=new JPanel();
+		panelNord=new JPanel();
+		panelSud=new JPanel();
+		lNb1=new JLabel("0");
+		lNb2=new JLabel("0");
+		lPlus=new JLabel("+");
+		lEgal=new JLabel("=");
+		tfReponse=new JTextField();
+		bCorrection=new JButton("Correction");
+		bInit=new JButton("Recommencer");
+		bQuit=new JButton("Quitter");
+		
+		panelNord.add(lNb1);
+		panelNord.add(lPlus);
+		panelNord.add(lNb2);
+		panelNord.add(lEgal);
+		panelNord.add(tfReponse);
+		
+		panelSud.add(bCorrection);
+		panelSud.add(bInit);
+		panelSud.add(bQuit);
+		
+		panelFond.setLayout(new java.awt.BorderLayout());
+		panelNord.setLayout(new java.awt.GridLayout(1,5));
+		panelSud.setLayout(new java.awt.GridLayout(1,3));
+		
+		panelFond.add(panelNord,BorderLayout.NORTH);
+		panelFond.add(panelSud,BorderLayout.SOUTH);
+		
+		
+		
+		fen.add(panelFond);
+		
+		
+		
+		
+		fen.setVisible(true);
+	}
+}

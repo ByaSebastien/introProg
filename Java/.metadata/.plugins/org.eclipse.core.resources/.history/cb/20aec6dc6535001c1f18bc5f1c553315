@@ -1,0 +1,32 @@
+package Interace;
+
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class LesVisiteurs extends JFrame {
+	
+	private static JPanel lePanelFond;
+	private static JButton bOK;
+
+	public static void main(String[] args) {
+		
+		LesVisiteurs maFen=new LesVisiteurs();
+		maFen.setSize(500, 300);
+		maFen.setLocation(400, 400);
+		maFen.setTitle("Les visiteurs - le retour !!!!");
+//		maFen.setBackground(Color.PINK);
+		maFen.add(lePanelFond);
+		maFen.setVisible(true);
+	
+	}
+	public LesVisiteurs(){
+		lePanelFond=new JPanel();
+		bOK=new JButton("éteindre");
+//		lePanelFond.setBackground(Color.PINK);
+		lePanelFond.setBackground(new Color(59,38,150));
+		lePanelFond.add(bOK);
+	}
+}

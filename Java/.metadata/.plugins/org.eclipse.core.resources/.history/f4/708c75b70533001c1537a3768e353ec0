@@ -1,0 +1,710 @@
+package PuissanceQuattre;
+
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Scanner;
+
+public class PuissanceQuattre {
+
+	public static int verrificationNbJoueur(int nbJoueur) {
+		nbJoueur=0;
+		while(nbJoueur<1 || nbJoueur>2) {
+			try{
+				nbJoueur=(new Scanner(System.in)).nextInt();
+			}
+			catch (InputMismatchException e){
+				System.out.println("choisissez entre 1 et 2");
+				nbJoueur=0;
+			}
+		}
+		return nbJoueur;
+	}
+
+	public static int verrificationSaisie(int colone) {
+		colone=0;
+		while(colone<1 || colone>7) {
+			try{
+				colone=(new Scanner(System.in)).nextInt();
+			}
+			catch (InputMismatchException e){
+				System.out.println("entrez un numero de colone");
+				colone=0;
+			}
+		}
+		return colone;
+	}
+
+	public static void initialiserTableau(char plateau[][],int tableau[][],int coupJouable[]) {
+
+		for(int y=0;y<plateau[0].length;y++) {
+			coupJouable[y]=5;
+			for(int x=0;x<plateau.length;x++) {
+				plateau[x][y]='-';
+				tableau[x][y]=1;
+			}
+		}	
+	}
+
+	public static void afficherPlateau(char plateau[][]) {
+		for(int y=0;y<plateau.length;y++) {
+			System.out.println();
+			for(int x=0;x<plateau[0].length;x++) {
+				System.out.print("  "+plateau[y][x]);
+			}
+		}
+		System.out.println();
+		System.out.println();
+		System.out.println("  1  2  3  4  5  6  7");
+	}
+
+	public static boolean unJoueur(char plateau[][],int tableau[][],int coupJouable[],int compteurCoupJoue,boolean victoire) {
+		char joueur='O';
+		int x=0,y=0;
+		boolean choixValide=false;
+
+
+		while(!choixValide) {
+			if(compteurCoupJoue%2==0) {
+				System.out.println("\n\nDans quelle colone voulez-vous jouer?");
+				x=verrificationSaisie(x);
+				x=x-1;
+			}
+			else{
+				x=tourIA(tableau, coupJouable);
+				System.out.println();
+				System.out.println("coup joué "+x);
+				System.out.println();
+			}
+			for(y=plateau.length-1;y>=0 && !choixValide;y--) {
+				if (plateau[y][x]=='-') {
+					if(compteurCoupJoue%2==0) {
+						joueur='O';
+					}
+					else {
+						joueur='X';
+					}
+					plateau[y][x]=joueur;
+					coupJouable[x]--;
+					tableau[y][x]=0;
+					choixValide=true;
+				}
+			}
+			
+			if(!choixValide && joueur=='O') {
+				System.out.println("Impossible de jouer dans cette colone");
+			}
+			if(!choixValide && joueur=='X') {
+				for(int a=0;a<coupJouable.length;a++){
+					if(coupJouable[a]<=0){
+						x=a;
+					}
+				}
+			}
+		}
+		y++;
+		victoire=verrificationVictoire(plateau,tableau, x, y, joueur, victoire);
+		return victoire;
+	}
+
+	public static int tourIA(int tableau[][],int coupJouable[]){
+		int x=0,ref=0;
+		int coup[]=new int[coupJouable.length];
+		int cpt=0;
+		Random r=new Random();
+
+
+		for(int a=0;a<coup.length;a++){
+			coup[a]=1;
+		}
+
+		for(int a=0;a<coupJouable.length;a++){
+			if (coupJouable[a]>=0){
+				if(coupJouable[a]>0){
+					if(tableau[coupJouable[a]][a]>ref && tableau[coupJouable[a]][a]>=tableau[coupJouable[a]-1][a]){
+						cpt=0;
+						coup[cpt]=a;
+						ref=tableau[coupJouable[a]][a];
+						//x=a;
+
+					}
+					else{
+						if(tableau[coupJouable[a]][a]==ref && cpt<6){
+							cpt++;
+							coup[cpt]=a;
+						}
+					}
+				}
+				else{
+					if(tableau[coupJouable[a]][a]>ref){
+						cpt=0;
+						coup[cpt]=a;
+						ref=tableau[coupJouable[a]][a];
+						//x=a;
+					}
+					else{
+						if(tableau[coupJouable[a]][a]==ref && cpt<6){
+							cpt++;
+							coup[cpt]=a;
+							
+						}
+					}
+				}
+				if(cpt==0){
+					x=coup[0];
+				}else{
+					x=coup[r.nextInt(cpt)];
+				}
+			}
+		}
+		System.out.println();
+		System.out.println(cpt);
+		System.out.println();
+		for(int i=0;i<coupJouable.length;i++){
+			System.out.print(coup[i]+" ");
+		}
+		
+		
+		return x;
+	}
+
+	public static boolean deuxJoueur(char plateau[][],int compteurCoupJoue,boolean victoire) {
+		char joueur='O';
+		int x=0,y=0;
+		boolean choixValide=false;
+
+
+		while(!choixValide) {
+			System.out.println("\n\nDans quelle colone voulez-vous jouer?");
+			x=verrificationSaisie(x);
+			x=x-1;
+			for(y=plateau.length-1;y>=0 && !choixValide;y--) {
+				if (plateau[y][x]=='-') {
+					if(compteurCoupJoue%2==0) {
+						joueur='O';
+					}
+					else {
+						joueur='X';
+					}
+					plateau[y][x]=joueur;
+					choixValide=true;
+				}
+			}
+			if(!choixValide) {
+				System.out.println("Impossible de jouer dans cette colone");
+			}
+		}
+		y++;
+		victoire=verrificationVictoire(plateau, x, y, joueur, victoire);
+		return victoire;
+	}
+
+	public static boolean verrificationVictoire(char plateau[][],int x,int y,char joueur,boolean victoire){
+		int cpt=0,a,b;
+
+		a=x;
+		b=y;
+		for (cpt=1;y<plateau.length && plateau[y][x]==joueur && !victoire;cpt++,y++){ //verif verticale|
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(cpt=1,y=b;x>=0 && plateau[y][x]==joueur && !victoire;cpt++,x--){ //verif <-
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a+1;x<plateau[0].length && plateau[y][x]==joueur && !victoire;cpt++,x++){ // verif ->
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(cpt=1,x=a;y<plateau.length && x>=0 && plateau[y][x]==joueur && !victoire;cpt++,x--,y++){ //verif /
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a+1,y=b-1;x<plateau[0].length && y>=0 && plateau[y][x]==joueur && !victoire;cpt++,x++,y--){ //verif /
+			if (cpt==4){
+				victoire=true;
+			}
+		}
+		for(cpt=1,x=a,y=b;x>=0 && y>=0 && plateau[y][x]==joueur && !victoire;cpt++,x--,y--){ //verif \
+			if (cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a+1,y=b+1;x<plateau[0].length && y<plateau.length && plateau[y][x]==joueur && !victoire;cpt++,x++,y++){ // verif \
+			if (cpt==4){
+				victoire=true;
+			}
+		}
+		return victoire;
+	}
+
+	public static boolean verrificationVictoire(char plateau[][],int tableau[][],int x,int y,char joueur,boolean victoire){
+		int cpt=0,cptIA=0,a,b;
+		boolean lev=false;
+		int un=2,deux=15,dos=15,trois=500,tres=500;
+
+		a=x;
+		b=y;
+		for (cpt=1,cptIA=1;y<plateau.length && plateau[y][x]==joueur && !victoire;cpt++,cptIA++,y++){ //verif verticale|
+			if (cptIA==1 && b>2){
+//				if(joueur=='O'){
+//					tableau[b-1][a]=tableau[b-1][a]+3;
+//				}
+				if(joueur=='X'){
+					tableau[b-1][a]=tableau[b-1][a]+un;
+				}
+			}
+			if (cptIA==2 && b>1){
+				if(joueur=='O'){
+					tableau[b-1][a]=tableau[b-1][a]+deux;
+				}
+				if(joueur=='X'){
+					tableau[b-1][a]=tableau[b-1][a]+dos;
+				}
+			}
+			if (cptIA==3 && b>0){
+				if(joueur=='O'){
+					tableau[b-1][a]=tableau[b-1][a]+trois;
+				}
+				if(joueur=='X'){
+					tableau[b-1][a]=tableau[b-1][a]+tres;
+				}
+			}
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		lev=false;
+		for(cpt=1,cptIA=1,y=b;x>=0 && plateau[y][x]==joueur && !victoire;cpt++,cptIA++,x--){ //verif <-
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a+1;x<plateau[0].length && plateau[y][x]==joueur && !victoire;cpt++,cptIA++,x++){ // verif ->
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		lev=false;
+		for(x=a,y=b;x<plateau[0].length && !lev;x++){
+			if (x>0 && plateau[y][x-1]==joueur && tableau[y][x]==0 && plateau[y][x]!=joueur){
+					lev=true;
+			}
+			if (cptIA==2 && !lev){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x<tableau[0].length-1){
+						if(plateau[y][x+1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+deux;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+dos;
+							}
+						}
+					}
+//					if(joueur=='O'){
+//						tableau[y][x]=tableau[y][x]+3;
+//					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+un;
+					}
+				}
+			}
+			if (cptIA==3 && !lev){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x<tableau[0].length-1){
+						if(plateau[y][x+1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+trois;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+tres;
+							}
+						}
+					}
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+deux;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+dos;
+					}
+				}
+			}
+			if (cptIA==4 && !lev){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+trois;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+tres;
+					}
+				}
+			}
+		}
+		lev=false;
+		for(x=a,y=b;x>=0 && !lev ;x--){
+
+			if (cptIA==2){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x>0){
+						if(plateau[y][x-1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+deux;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+dos;
+							}
+						}
+					}
+//					if(joueur=='O'){
+//						tableau[y][x]=tableau[y][x]+3;
+//					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+un;
+					}
+				}
+			}
+			if (cptIA==3){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x>0){
+						if(plateau[y][x-1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+trois;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+tres;
+							}
+						}
+					}
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+deux;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+dos;
+					}
+				}
+			}
+			if (cptIA==4){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+trois;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+tres;
+					}
+				}
+			}
+		}
+		lev=false;
+		for(cpt=1,cptIA=1,x=a;y<plateau.length && x>=0 && plateau[y][x]==joueur && !victoire;cpt++,cptIA++,x--,y++){ //verif /
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a+1,y=b-1;x<plateau[0].length && y>=0 && plateau[y][x]==joueur && !victoire;cpt++,cptIA++,x++,y--){ //verif /
+			if (cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a,y=b;y<plateau.length && x>=0  && !lev;x--,y++){
+
+			if (cptIA==2){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x>0&&y<plateau.length-1){
+						if(plateau[y+1][x-1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+deux;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+dos;
+							}
+						}
+					}
+//					if(joueur=='O'){
+//						tableau[y][x]=tableau[y][x]+3;
+//					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+un;
+					}
+				}
+			}
+			if (cptIA==3){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x>0&&y<plateau.length-1){
+						if(plateau[y+1][x-1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+trois;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+tres;
+							}
+						}
+					}
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+deux;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+dos;
+					}
+				}
+			}
+			if (cptIA==4){
+				if(tableau[y][a]>0){
+					lev=true;
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+trois;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+tres;
+					}
+				}
+			}
+		}
+		lev=false;
+		for(x=a,y=b;y>=0 && x<plateau[0].length  && !lev;x++,y--){
+
+			if (cptIA==2){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x<tableau[0].length-1 && y>0){
+						if(plateau[y-1][x+1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+deux;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+dos;
+							}
+						}
+					}
+//					if(joueur=='O'){
+//						tableau[y][x]=tableau[y][x]+3;
+//					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+un;
+					}
+				}
+			}
+			if (cptIA==3){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x<tableau[0].length-1 && y>0){
+						if(plateau[y-1][x+1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+trois;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+tres;
+							}
+						}
+					}
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+deux;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+dos;
+					}
+				}
+			}
+			if (cptIA==4){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+trois;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+tres;
+					}
+				}
+			}
+		}
+		lev=false;
+		for(cpt=1,cptIA=1,x=a,y=b;x>=0 && y>=0 && plateau[y][x]==joueur && !victoire;cpt++,cptIA++,x--,y--){ //verif \
+			if (cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a+1,y=b+1;x<plateau[0].length && y<plateau.length && plateau[y][x]==joueur && !victoire;cpt++,cptIA++,x++,y++){ // verif \
+			if (cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a,y=b;y<plateau.length && x<plateau[0].length  && !lev;x++,y++){
+
+			if (cptIA==2){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x<plateau[0].length-1 && y<plateau.length-1){
+						if(plateau[y+1][x+1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+deux;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+dos;
+							}
+						}
+					}
+//					if(joueur=='O'){
+//						tableau[y][x]=tableau[y][x]+3;
+//					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+un;
+					}
+				}
+			}
+			if (cptIA==3){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x<plateau[0].length-1 && y<plateau.length-1){
+						if(plateau[y+1][x+1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+trois;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+tres;
+							}
+						}
+					}
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+deux;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+dos;
+					}
+				}
+			}
+			if (cptIA==4){
+				if(tableau[y][a]>0){
+					lev=true;
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+trois;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+tres;
+					}
+				}
+			}
+		}
+		lev=false;
+		for(x=a,y=b;y>=0 && x>=0  && !lev;x--,y--){
+
+			if (cptIA==2){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x>0 && y>0){
+						if(plateau[y-1][x-1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+deux;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+dos;
+							}
+						}
+					}
+//					if(joueur=='O'){
+//						tableau[y][x]=tableau[y][x]+3;
+//					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+un;
+					}
+				}
+			}
+			if (cptIA==3){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(x>0 && y>0){
+						if(plateau[y-1][x-1]==joueur){
+							if(joueur=='O'){
+								tableau[y][x]=tableau[y][x]+trois;
+							}
+							if(joueur=='X'){
+								tableau[y][x]=tableau[y][x]+tres;
+							}
+						}
+					}
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+deux;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+dos;
+					}
+				}
+			}
+			if (cptIA==4){
+				if(tableau[y][x]>0){
+					lev=true;
+					if(joueur=='O'){
+						tableau[y][x]=tableau[y][x]+trois;
+					}
+					if(joueur=='X'){
+						tableau[y][x]=tableau[y][x]+tres;
+					}
+				}
+			}
+		}
+		lev=false;
+		return victoire;
+	}
+
+	public static void main(String[] args) {
+
+		char plateau[][]=new char[6][7];
+		int tableau[][]=new int[6][7];
+		int coupJouable[]=new int[7];
+		int nbJoueur=0;
+		boolean victoire=false;
+		int choix=1;
+
+
+		while(choix==1) {
+			victoire=false;
+			initialiserTableau(plateau, tableau, coupJouable);;
+			System.out.println("1: Jouer seul\n2: Jouer à deux");
+			nbJoueur=verrificationNbJoueur(nbJoueur);
+			afficherPlateau(plateau);			
+			for(int compteurCoupJoue=0;compteurCoupJoue<42 && !victoire;compteurCoupJoue++) {
+				if(nbJoueur==2) {
+					victoire=deuxJoueur(plateau, compteurCoupJoue, victoire);
+				}
+				else {
+					victoire=unJoueur(plateau, tableau, coupJouable, compteurCoupJoue, victoire);
+				}
+				afficherPlateau(plateau);
+
+				
+				System.out.println();
+				System.out.println("tableau");
+				System.out.println();
+				for(int y=0;y<plateau.length;y++) {
+					System.out.println();
+					for(int x=0;x<plateau[0].length;x++) {
+						System.out.print("  "+tableau[y][x]);
+					}
+				}
+				System.out.println(" ");
+				System.out.println();
+				System.out.print(" ");
+				for(int i=0;i<coupJouable.length;i++){
+					System.out.print(coupJouable[i]+" ");
+				}
+				 
+
+			}
+			if(victoire) {
+				System.out.println("\nBravo!!!");
+			}
+			System.out.println("\n1:Continuer\n2:Arrêter");
+			choix=verrificationNbJoueur(choix);
+		}
+	}
+}

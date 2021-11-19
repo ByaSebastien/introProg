@@ -1,0 +1,14 @@
+package Interace;
+
+import javax.swing.JFrame;
+
+public class LesVisiteurs extends JFrame {
+
+	public static void main(String[] args) {
+		
+		LesVisiteurs maFen=new LesVisiteurs();
+		maFen.setSize(500, 300);
+
+	}
+
+}

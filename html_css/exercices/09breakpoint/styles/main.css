@@ -1,0 +1,79 @@
+h1{
+	background-color: purple;
+	padding: 15px 0px;
+}
+h2{
+	max-width: 600px;
+	margin: auto;
+	background-color: orange;
+	text-align: center;
+	padding: 15px;
+	margin-bottom: 21.44px;
+}
+.grand div{
+	background-color: red;
+	display: inline-block;
+	padding: 2.5%;
+	width: 28%;
+}
+.grand{
+	margin-bottom: 24.44px;
+}
+.milieu{
+	margin-left: 0.5%;
+	margin-right: 0.5%;
+}
+.petit div{
+	background-color: black;
+	color: white;
+	display: inline-block;
+	width: 44.5%;
+	padding: 2.5%;
+	margin: 10px 0px;
+}
+.petit div:first-child{
+	margin-right: 0.5%;
+}
+.petit div:last-child{
+	margin-left: 0.5%;
+}
+@media screen and (max-width: 992px){
+	.grand div:last-child{
+		display: none;
+	}
+	.grand div:first-child{
+		margin-right: 0.5%;
+	}
+	.grand div{
+		background-color: green;
+		width: 44.5%;
+	}
+	.milieu{
+		margin: 0% 0% 0% 0.5%;
+	}
+	.petit div{
+		margin-right: 0px;
+		display: block;
+		width: 100%;
+	}
+	.petit div:last-child{
+		margin-left: 0px;
+	}
+}
+@media screen and (max-width: 768px){
+	.milieu{
+		margin: 0px;
+	}
+	.grand div{
+		background-color: blue;
+		display: block;
+		width: 100%;
+		margin-bottom: 21.44px;
+	}
+	.grand div:last-child{
+		display: block;
+	}
+	h2{
+		max-width: 100%;
+	}
+}

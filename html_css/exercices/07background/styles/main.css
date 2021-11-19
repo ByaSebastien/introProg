@@ -1,0 +1,22 @@
+h1{
+	font-family: 'Dancing Script', cursive;
+}
+body{
+	background-color: grey;
+}
+div{
+	color: white;
+	max-width: 600px;
+	margin:  100px auto;
+	border: solid white;
+	background-image: url(../images/image1.jpg);
+	background-size: cover;
+	background-position: center;
+	padding: 50px;
+}
+.fix{
+	background-image: url(../images/image2.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}

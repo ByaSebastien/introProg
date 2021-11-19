@@ -1,0 +1,52 @@
+package Tableau2d;
+
+import java.util.Random;
+
+public class SommeColonne {
+	public static void FillTab(int tab[][]){
+		Random r= new Random() ; 
+		int nb=0;
+		for (int i=0;i<tab.length;i++){
+			for (int j=0;j<tab[0].length;j++){
+				nb=r.nextInt(100);
+				tab[i][j]=nb;
+			}
+		}
+	}
+	public static void ShowTab (int tab[][]){
+		for (int i=0;i<tab.length;i++){
+			System.out.println();
+			for (int j=0;j<tab[0].length;j++){
+				System.out.print(tab[i][j]+"\t");
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+
+
+		int tab[][]=new int[4][5];
+
+		FillTab(tab);
+		ShowTab(tab);
+
+		for (int i=0;i<tab.length;i++){
+			for (int j=0;j<tab[0].length;j++){
+				if(i==3||j==4){
+					tab[i][j]=0;
+				}
+			}
+		}
+		System.out.println();
+		ShowTab(tab);
+		for (int i=0;i<tab.length-1;i++){
+			for (int j=0;j<tab[0].length-1;j++){
+				tab[i][4]=tab[i][4]+tab[i][j];
+				tab[3][j]=tab[3][j]+tab[i][j];
+				tab[3][4]=tab[3][4]+tab[i][j];
+			}
+		}
+		System.out.println();
+		ShowTab(tab);
+	}
+}

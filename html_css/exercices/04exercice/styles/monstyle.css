@@ -1,0 +1,40 @@
+body {
+	background-image: ../images/image1;
+	font-family: 'arial', sans-serif;
+}
+h1{
+	text-transform: uppercase;
+}
+.notes {
+	font-size: 10px;
+	font-style: italic;
+	color: grey;
+}
+.notes::before {
+	content: "Note: ";
+}
+a:link, a:visited {
+	color: blue;
+	text-decoration:none;
+}
+a:hover {
+	color: darkblue;
+}
+.navigation:link,
+.navigation:visited {
+	color: white;
+	background: blue;
+}
+.navigation:hover{
+	color: white;
+	background: darkblue;
+}
+.next::after{
+	content: ">";
+}
+.prev::before{
+	content: "<";
+}
+ul{
+	list-style-type: square;
+}

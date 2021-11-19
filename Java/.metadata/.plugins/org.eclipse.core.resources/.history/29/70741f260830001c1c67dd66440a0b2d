@@ -1,0 +1,27 @@
+package PuissanceQuattre;
+
+public class PuissanceQuattre {
+	
+	public static void verrificationVictoire(char plateau[][]){
+		int cpt=0;
+		
+		
+		
+	}
+
+	public static void main(String[] args) {
+		char plateau[][]=new char[7][6];
+		
+		for(int y=0;y<plateau[0].length;y++){
+			System.out.println();
+			for(int x=0;x<plateau.length;x++){
+				plateau[x][y]='O';
+				System.out.print(" "+plateau[x][y]);
+			}
+		}
+		
+		
+
+	}
+
+}

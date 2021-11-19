@@ -1,0 +1,41 @@
+body{
+	background-color: grey;
+	background-image: url('../images/gif5.gif');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+
+}
+div{
+	margin:auto;
+	max-width: 120px;
+	text-align: center;
+	background-color: white;
+	padding: 5px;
+}
+
+figure{
+	/*display: flex;
+  	justify-content: center;*/	
+  	/*text-align: center;*/
+	margin: 50px auto 15px;
+	background-color: white;
+	max-width: 720px;
+	padding: 20px 20px 0px;
+	box-shadow: 100px 100px 100px black;
+}
+.images{
+	/*max-width: 100%;*/
+	width: 100%;
+	height: auto;
+}
+figcaption{
+	padding:  15px;
+	vertical-align: middle;
+	font-size: 20px;
+	font-weight: 800;
+	text-align: center;
+}
+a{
+	margin: 3px;
+}

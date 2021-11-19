@@ -1,0 +1,53 @@
+package PuissanceQuattre;
+
+public class PuissanceQuattre {
+
+	public static void verrificationVictoire(char plateau[][],int x,int y,char joueur){
+		int cpt=0,a,b;
+		boolean victoire=false;
+		
+		a=x;
+		b=y;
+		for (cpt=1;y<6 && plateau[x][y]==joueur && !victoire;cpt++,y++){
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(cpt=1,y=b;x>=0 && plateau[x][y]==joueur && !victoire;cpt++,x--){
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a+1;x<7 && plateau[x][y]==joueur && !victoire;cpt++,x++){
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(cpt=0,x=a;y<6 && x>=0 && plateau[x][y]==joueur && !victoire;cpt++,x--,y++){
+			if(cpt==4){
+				victoire=true;
+			}
+		}
+		for(x=a+1,y=b-1;x<7 && y>=0 && plateau[x][y]==joueur && !victoire;cpt++,x++,y--){
+			if (cpt==4){
+				victoire=true;
+			}
+		}
+		
+	}
+	public static void main(String[] args) {
+		char plateau[][]=new char[7][6];
+
+		for(int y=0;y<plateau[0].length;y++){
+			System.out.println();
+			for(int x=0;x<plateau.length;x++){
+				plateau[x][y]='O';
+				System.out.print(" "+plateau[x][y]);
+			}
+		}
+
+
+
+	}
+
+}
